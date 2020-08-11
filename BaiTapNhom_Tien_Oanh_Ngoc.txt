@@ -1,0 +1,61 @@
+//tao database
+create database quanlybanhang;
+//vao database quanlybanhang
+use quanlybanhang;
+//tao table tinhtp
+CREATE TABLE `quanlybanhang`.`tinhtp` ( `matp` CHAR(2) NOT NULL , `tentp` VARCHAR(30) NOT NULL DEFAULT '' , PRIMARY KEY (`matp`)) ;
+//tao table don vi 
+CREATE TABLE `quanlybanhang`.`donvi` ( `madv` CHAR(2) NOT NULL , `tendv` VARCHAR(30) NOT NULL , PRIMARY KEY (`madv`), UNIQUE (`tendv`));
+//tao table nhacungcap
+CREATE TABLE `quanlybanhang`.`nhacungcap` ( `mancc` INT NOT NULL AUTO_INCREMENT , `tenncc` VARCHAR(30) NOT NULL , `diachi` VARCHAR(60) NOT NULL DEFAULT '' , `dien` VARCHAR(11) NOT NULL DEFAULT '' , PRIMARY KEY (`mancc`), UNIQUE (`tenncc`));
+//tao table mat hang
+CREATE TABLE `quanlybanhang`.`mathang` ( `mamh` INT NOT NULL AUTO_INCREMENT , `tenmh` VARCHAR(30) NOT NULL , `donvitinh` VARCHAR(20) NOT NULL DEFAULT '' , `dongia` INT UNSIGNED NOT NULL DEFAULT '0' , `hinhsp` TEXT NULL , `mancc` INT NOT NULL , PRIMARY KEY (`mamh`), UNIQUE (`tenmh`)) ;
+//tao table nhan vien
+CREATE TABLE `quanlybanhang`.`nhanvien` ( `manv` INT NOT NULL AUTO_INCREMENT , `holot` VARCHAR(30) NOT NULL DEFAULT '' , `tennv` VARCHAR(20) NOT NULL DEFAULT '' , `phai` ENUM('F','M') NOT NULL DEFAULT 'F' , `luongcb` INT UNSIGNED NOT NULL DEFAULT '0' , `ngaynviec` DATE NOT NULL , `diachinv` VARCHAR(60) NOT NULL DEFAULT '' , `dienthoainv` VARCHAR(11) NULL DEFAULT '' , `hinhnv` TEXT NULL , PRIMARY KEY (`manv`)) ;
+//tao table khach hang
+CREATE TABLE `quanlybanhang`.`khachhang` ( `MaKH` VARCHAR(10) NOT NULL ,  `tenkh` VARCHAR(40) NOT NULL DEFAULT '' ,  `diachi` VARCHAR(60) NOT NULL DEFAULT '' ,  `dienthoai` VARCHAR(11) NOT NULL DEFAULT '' ,  `matp` CHAR(2) NOT NULL ,    PRIMARY KEY  (`MaKH`),    UNIQUE  (`tenkh`));
+//tao table don dat hang
+CREATE TABLE `quanlybanhang`.`dondathang` ( `maddh` CHAR(5) NOT NULL ,  `makh` VARCHAR(10) NOT NULL ,  `manv` INT NOT NULL ,  `ngaydh` DATE NOT NULL ,  `ngaygiao` DATE NULL ,    PRIMARY KEY  (`maddh`));
+//tao table chi tiet don dat hang
+CREATE TABLE `quanlybanhang`.`chitietddh` ( `maddh` CHAR(5) NOT NULL ,  `mamh` INT NOT NULL ,  `soluong` INT NOT NULL ,  `giamgia` INT NOT NULL DEFAULT '0' ,    PRIMARY KEY  (`maddh`, `mamh`));
+//tao table cham cong
+CREATE TABLE `quanlybanhang`.`chamcong` ( `thang` TINYINT UNSIGNED NOT NULL ,  `nam` SMALLINT UNSIGNED NOT NULL ,  `manv` INT NOT NULL ,  `ngaycong` TINYINT NOT NULL DEFAULT '0' ,    PRIMARY KEY  (`thang`, `nam`, `manv`));
+
+
+
+Câu 1:
+	SELECT MaMH,TenMH,DonViTinh,DonGia FROM `mathang`;
+Câu 2:
+	SELECT MaMH, TenMH, DonViTinh, DonGia FROM `mathang` WHERE DonGia >= 62
+Câu 3:
+	SELECT nhacungcap.MaNCC, nhacungcap.TenNCC, mathang.MaMH, mathang.TenMH, mathang.DonViTinh, mathang.DonGia FROM mathang JOIN nhacungcap ON mathang.MaNCC = nhacungcap.MaNCC WHERE nhacungcap.MaNCC = '4' OR nhacungcap.MaNCC = '2'
+Câu 4:
+	SELECT nhacungcap.MaNCC, nhacungcap.TenNCC, nhacungcap.DiaChi, mathang.MaMH, mathang.TenMH, mathang.DonViTinh, mathang.DonGia FROM mathang JOIN nhacungcap ON mathang.MaNCC = nhacungcap.MaNCC WHERE nhacungcap.DiaChi = 'TP.HCM'
+Câu 5:
+	SELECT dondathang.MaDDH, dondathang.NgayDH, dondathang.MaKH, khachhang.TenKH, chitietddh.MaMH, mathang.TenMH, chitietddh.SoLuong FROM khachhang JOIN dondathang ON khachhang.MaKH= dondathang.MaKH JOIN chitietddh ON chitietddh.MaDDH = dondathang.MaDDH JOIN mathang ON mathang.MaMH = chitietddh.MaMH WHERE dondathang.NgayDH >= '1997-1-1' AND dondathang.NgayDH <= '1997-1-31'
+Câu 6:
+	SELECT dondathang.MaDDH, dondathang.NgayDH, dondathang.NgayGiao, dondathang.MaNV, concat(nhanvien.HoLot,' ',nhanvien.TenNV) as HoTenNV FROM nhanvien JOIN dondathang ON nhanvien.MaNV = dondathang.MaNV WHERE dondathang.NgayDH >= '1997-2-1' AND dondathang.NgayDH <= '1997-2-28'
+Câu 7;
+	SELECT dondathang.MaDDH, dondathang.NgayDH, dondathang.MaKH, khachhang.TenKH, dondathang.MaNV, concat(nhanvien.HoLot,' ',nhanvien.TenNV) as HoTenNV FROM nhanvien JOIN dondathang ON nhanvien.MaNV = dondathang.MaNV JOIN khachhang on khachhang.MaKH = dondathang.MaKH WHERE dondathang.NgayGiao < '1997-3-1' AND (nhanvien.MaNV = '4' OR nhanvien.MaNV = '5')
+Câu 8:
+	SELECT nhanvien.MaNV,nhanvien.HoLot,nhanvien.TenNV,nhanvien.DiaChiNV,nhanvien.NgayNViec,nhanvien.Phai FROM `nhanvien` WHERE Phai ='M'
+Câu 9:
+	SELECT nhanvien.MaDV, nhanvien.MaNV, nhanvien.HoLot, nhanvien.TenNV, nhanvien.Phai, nhanvien.LuongCB, nhanvien.NgayNViec FROM `nhanvien` WHERE nhanvien.NgayNViec >= '1991-7-1' and nhanvien.NgayNViec <= '1992-11-30' and LuongCB < 300
+Câu 10: 
+	SELECT nhanvien.MaNV, nhanvien.HoLot, nhanvien.TenNV, nhanvien.Phai, nhanvien.DiaChiNV FROM `nhanvien` WHERE (nhanvien.Phai = 'F' and nhanvien.DiaChiNV = 'Q1') or nhanvien.Phai = 'M'
+Câu 11:
+	SELECT nhanvien.MaNV, nhanvien.HoLot, nhanvien.TenNV, nhanvien.MaDV, chamcong.Thang, chamcong.Nam, chamcong.NgayCong FROM `nhanvien` JOIN chamcong on nhanvien.MaNV = chamcong.MaNV WHERE chamcong.Thang ='1' and chamcong.Nam = '1999' and chamcong.NgayCong < '25'
+Câu 17:
+	SELECT DISTINCT `tinhtp`.`MaTP`, COUNT(khachhang.MaKH) FROM khachhang JOIN tinhtp on khachhang.MaTP = tinhtp.MaTP GROUP BY tinhtp.MaTP
+Câu 18:
+	SELECT DISTINCT nhanvien.MaDV, donvi.TenDV, COUNT(nhanvien.MaDV) FROM donvi JOIN nhanvien ON nhanvien.MaDV = donvi.MaDV GROUP BY nhanvien.MaDV
+Câu 19:
+	SELECT DISTINCT YEAR(dondathang.NgayDH) AS Nam, COUNT(dondathang.MaDDH) AS TongSoDDH, khachhang.MaKH, khachhang.TenKH FROM `dondathang` JOIN khachhang ON khachhang.MaKH = dondathang.MaKH GROUP BY dondathang.MaKH
+Câu 20:
+	SELECT DISTINCT YEAR(dondathang.NgayDH) AS Nam, dondathang.MaDDH, dondathang.MaKH, dondathang.NgayDH, dondathang.NgayGiao, chitietddh.SoLuong * chitietddh.GiamGia * mathang.DonGia AS tongtri FROM dondathang JOIN chitietddh ON chitietddh.MaDDH = dondathang.MaDDH JOIN mathang ON chitietddh.MaMH = mathang.MaMH
+Câu 21:
+	SELECT DISTINCT YEAR(dondathang.NgayDH) AS Nam, dondathang.MaKH, khachhang.TenKH, COUNT(YEAR(dondathang.NgayDH)), SUM(chitietddh.SoLuong * chitietddh.GiamGia * mathang.DonGia)*COUNT(YEAR(dondathang.NgayDH)) AS tongtri FROM dondathang JOIN chitietddh ON chitietddh.MaDDH = dondathang.MaDDH JOIN mathang ON chitietddh.MaMH = mathang.MaMH JOIN khachhang ON khachhang.MaKH = dondathang.MaKH GROUP BY dondathang.MaKH
+Câu 22:
+	
+
+	
