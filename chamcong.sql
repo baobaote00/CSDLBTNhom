@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th8 03, 2020 lúc 06:54 AM
--- Phiên bản máy phục vụ: 5.7.21
--- Phiên bản PHP: 5.6.35
+-- Thời gian đã tạo: Th8 11, 2020 lúc 04:03 PM
+-- Phiên bản máy phục vụ: 8.0.18
+-- Phiên bản PHP: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,12 +30,25 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `chamcong`;
 CREATE TABLE IF NOT EXISTS `chamcong` (
-  `Thang` tinyint(3) UNSIGNED NOT NULL,
-  `Nam` smallint(5) UNSIGNED NOT NULL,
-  `MaNV` int(11) NOT NULL,
-  `NgayCong` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Thang`,`Nam`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `thang` tinyint(3) UNSIGNED NOT NULL,
+  `nam` smallint(5) UNSIGNED NOT NULL,
+  `manv` int(11) NOT NULL,
+  `ngaycong` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`thang`,`nam`,`manv`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chamcong`
+--
+
+INSERT INTO `chamcong` (`thang`, `nam`, `manv`, `ngaycong`) VALUES
+(1, 1991, 1, 20),
+(2, 1991, 2, 30),
+(3, 1991, 3, 30),
+(4, 1992, 4, 30),
+(5, 1992, 5, 40),
+(1, 1992, 6, 30),
+(12, 1991, 7, 30);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

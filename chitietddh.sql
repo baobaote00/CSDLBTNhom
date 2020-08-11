@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th8 03, 2020 lúc 06:55 AM
--- Phiên bản máy phục vụ: 5.7.21
--- Phiên bản PHP: 5.6.35
+-- Thời gian đã tạo: Th8 11, 2020 lúc 04:03 PM
+-- Phiên bản máy phục vụ: 8.0.18
+-- Phiên bản PHP: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,12 +30,26 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `chitietddh`;
 CREATE TABLE IF NOT EXISTS `chitietddh` (
-  `MaDDH` char(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `MaMH` int(11) NOT NULL,
-  `SoLuong` int(11) NOT NULL,
-  `GiamGia` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`MaDDH`,`MaMH`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `maddh` char(5) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
+  `mamh` int(11) NOT NULL,
+  `soluong` int(11) NOT NULL,
+  `giamgia` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`maddh`,`mamh`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chitietddh`
+--
+
+INSERT INTO `chitietddh` (`maddh`, `mamh`, `soluong`, `giamgia`) VALUES
+('1', 1, 2, 10),
+('1', 2, 2, 1),
+('2', 3, 3, 1),
+('3', 4, 4, 1),
+('4', 5, 6, 20),
+('5', 6, 7, 1),
+('6', 7, 8, 1),
+('7', 8, 9, 10);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

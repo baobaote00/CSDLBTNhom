@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th8 03, 2020 lúc 06:55 AM
--- Phiên bản máy phục vụ: 5.7.21
--- Phiên bản PHP: 5.6.35
+-- Thời gian đã tạo: Th8 11, 2020 lúc 04:03 PM
+-- Phiên bản máy phục vụ: 8.0.18
+-- Phiên bản PHP: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,13 +30,26 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `dondathang`;
 CREATE TABLE IF NOT EXISTS `dondathang` (
-  `MaDDH` char(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `MaKH` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `MaNV` int(11) DEFAULT NULL,
-  `NgayDH` date NOT NULL,
-  `NgayGiao` date NOT NULL,
-  PRIMARY KEY (`MaDDH`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `maddh` char(5) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
+  `makh` varchar(10) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
+  `manv` int(11) NOT NULL,
+  `ngaydh` date NOT NULL,
+  `ngaygiao` date DEFAULT NULL,
+  PRIMARY KEY (`maddh`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `dondathang`
+--
+
+INSERT INTO `dondathang` (`maddh`, `makh`, `manv`, `ngaydh`, `ngaygiao`) VALUES
+('1', 'CODACO', 1, '1997-02-02', '1997-02-03'),
+('2', 'COTEC', 2, '1997-01-03', '1997-01-04'),
+('3', 'DHP', 3, '1997-02-15', '1997-02-18'),
+('4', 'GIAY32', 4, '1997-03-01', '1997-04-01'),
+('5', 'RUBIMEX', 5, '1998-05-01', '1998-05-02'),
+('6', 'SAMACO', 6, '1998-05-02', '1998-05-06'),
+('7', 'SAMECO', 7, '1998-05-02', '1998-05-04');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
